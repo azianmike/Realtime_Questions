@@ -11,11 +11,15 @@ def index(request):
     returnDict = {}
     returnDict['success'] = -1
     
+    if( request.session.has_key('has_loggedin') and request.session['has_loggedin'] == True):
+        returnDict['message'] = 'Already logged in'
+        return HttpResponse(dumps(returnDict))     
+    
     emailPost = request.POST.get("email", "")
     passwordPost = request.POST.get("password", "")
     
     try:
-        checkForUser = User.objects.get(_id=emailPost, password=passwordPost)
+        checkForUser = User.objects.get(email=emailPost, password=passwordPost)
         if checkForUser.activated == False:
             returnDict['success'] = -3
             returnDict['message'] = 'Please activate your email'

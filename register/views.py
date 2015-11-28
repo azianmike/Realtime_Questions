@@ -19,7 +19,7 @@ def index(request):
     returnDict = {}
 
     try:
-        checkOld = User.objects.get(_id=emailPost)
+        checkOld = User.objects.get(email=emailPost)
         returnDict['success']=-1
         returnDict['message']="Email is already registered!"
         return HttpResponse(dumps(returnDict))
@@ -32,7 +32,7 @@ def index(request):
         #now = datetime.datetime.now()
         #mysqlTime = now.strftime(f)
         #userToAdd = User.objects.create(_id=emailPost, password=passwordPost, joinDate=mysqlTime)
-        userToAdd = User(_id=emailPost, password=passwordPost, activated=False)
+        userToAdd = User(email=emailPost, password=passwordPost, activated=True)
         userToAdd.save()
         returnDict['success']= 1
         returnDict['message'] = "Registered! Check your email to activate your account"

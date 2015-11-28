@@ -13,7 +13,7 @@ from mongoengine import *
 connect('realtimeQuestions_DB')
 
 class User(Document):
-    _id = StringField(required=True)
+    email = StringField(required=True)
     password = StringField(required=True)
     activated = BooleanField(required=True)
     joinDate = DateTimeField()
