@@ -32,7 +32,9 @@ def index(request):
         #now = datetime.datetime.now()
         #mysqlTime = now.strftime(f)
         #userToAdd = User.objects.create(_id=emailPost, password=passwordPost, joinDate=mysqlTime)
-        userToAdd = User(email=emailPost, password=passwordPost, activated=True)
+        import datetime
+        joinDateTime = datetime.datetime.now()
+        userToAdd = User(email=emailPost, password=passwordPost, activated=True, joinDate = joinDateTime)
         userToAdd.save()
         returnDict['success']= 1
         returnDict['message'] = "Registered! Check your email to activate your account"

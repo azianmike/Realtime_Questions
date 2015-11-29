@@ -27,6 +27,7 @@ def index(request):
         returnDict['success'] = 1
         request.session['has_loggedin'] = True
         request.session['email'] = emailPost
+        returnDict['objectID'] = str(checkForUser.id)
         return HttpResponse(dumps(returnDict))
     except User.DoesNotExist:
         returnDict['success'] = 0
@@ -34,3 +35,24 @@ def index(request):
         return HttpResponse(dumps(returnDict))
 
     return HttpResponse('loginSuccess')
+
+@csrf_exempt
+def testObjectIdExists(request):
+    returnDict = {}
+    returnDict['success'] = -1
+
+    objectID = request.POST.get("objectID", "")
+    try:
+        checkForUser = User.objects.get(id=objectID)
+        returnDict['success'] = 1
+        returnDict['message'] = 'objectID exists!'
+        returnDict['email'] = checkForUser.email
+
+        return HttpResponse(dumps(returnDict))
+
+    except User.DoesNotExist:
+        returnDict['success'] = 0
+        returnDict['message'] = 'objectID does not exist'
+        return HttpResponse(dumps(returnDict))
+    
+    return HttpResponse(dumps(returnDict))

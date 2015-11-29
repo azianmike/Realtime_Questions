@@ -7,8 +7,10 @@ from django.conf.urls import patterns, include, url
 urlpatterns = patterns('',
     # Examples:
     url(r'^$', 'homePage.views.index', name='home'),
-    url(r'^api/register/', 'register.views.index', name='home'),
-    url(r'^api/login/', 'login.views.index', name='home'),
+    url(r'^api/register', 'register.views.index', name='home'),
+    url(r'^api/login', 'login.views.index', name='home'),
+    url(r'^api/testObjectIdExists', 'login.views.testObjectIdExists', name='testObjectIdExists'),
+
     # url(r'^Realtime_Questions/', include('Realtime_Questions.foo.urls')),
 
     # Uncomment the admin/doc line below to enable admin documentation:
