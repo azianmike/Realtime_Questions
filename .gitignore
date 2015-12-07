@@ -1,2 +1,8 @@
 *.pyc
 env/
+.idea/.name
+.idea/misc.xml
+.idea/modules.xml
+.idea/Realtime_Questions.iml
+.idea/vcs.xml
+.idea/workspace.xml
