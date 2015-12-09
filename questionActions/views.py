@@ -8,13 +8,13 @@ from json import dumps
 # Create your views here.
 
 @csrf_exempt
-def index(request):
+def submitQuestion(request):
     returnDict = {}
 
-    return HttpResponse(dumps(submitQuestion(request)))
+    return HttpResponse(dumps(submitQuestionHelper(request)))
     
 
-def submitQuestion(request):
+def submitQuestionHelper(request):
 
     #user who submitted
     userIDPOST = request.POST.get("userID", "")
@@ -38,6 +38,7 @@ def submitQuestion(request):
 
     #TODO Error validation on these things
     questionToSubmit = Question(submitUserBid = userIDPOST,
+                                questionText = questionTextPOST,
                                 numOfAnswers = numOfAnswersPOST,
                                 arrayOfAnswers = arrayOfAnswersPOST,
                                 timeSubmitted = timeSubmittedPOST,
