@@ -5,6 +5,7 @@ from questionActions.models import Question
 from register.models import User
 from django.http import HttpResponse
 from json import dumps
+from datetime import datetime
 # Create your views here.
 
 @csrf_exempt
@@ -25,9 +26,14 @@ def submitQuestionHelper(request):
     #array of all the possible answer choices that someone could answer with
     arrayOfAnswersPOST = request.POST.get("arrayOfAnswers", "{}")
     #time submitted, need to get from due to locale info and network inconsistencies
+    #example is Jun 1 2005  1:33PM
+    #http://stackoverflow.com/questions/466345/converting-string-into-datetime
     timeSubmittedPOST = request.POST.get("timeSubmitted", "")
+    timeSubmittedPOST = datetime.strptime(timeSubmittedPOST, '%b %d %Y %I:%M%p')
     #time (in hrs) that the question should be active for
     expirationTimePOST = request.POST.get("expirationTime", 0)
+    expirationTimePOST = datetime.strptime(expirationTimePOST, '%b %d %Y %I:%M%p')
+
     #question has to be active by default, right?
     isActivePOST = True
     #the bid amount that the user who submitted wants to BET
