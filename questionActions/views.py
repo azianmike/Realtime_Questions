@@ -41,6 +41,8 @@ def submitQuestionHelper(request):
     submitUserBidPOST = request.POST.get("submitUserBid", 0)
     #max bid at the start has to be the submit user bid right? or 0 to signify no one has bidded
     maxBidPOST = 0
+    #get the category that the question is in
+    categoryID = request.POST.get("category", "")
 
     if questionTextPOST[-1] != '?':
         questionTextPOST += '?'
@@ -54,7 +56,8 @@ def submitQuestionHelper(request):
                                 expirationTime = expirationTimePOST,
                                 isActive = isActivePOST,
                                 submitUserBid = submitUserBidPOST,
-                                maxBid = maxBidPOST
+                                maxBid = maxBidPOST,
+                                category = categoryID
     )
     questionToSubmit.save()
 

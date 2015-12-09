@@ -12,7 +12,7 @@ class Question(Document):
     isActive = BooleanField(required=True)
     submitUserBid = IntField(required=True)
     maxBid = IntField(required=True)
-    #category = ObjectIdField(required=True) #category ObjectID
+    category = ObjectIdField(required=True) #category ObjectID
 
 class Category(Document):
     categoryName = StringField(required=True)
