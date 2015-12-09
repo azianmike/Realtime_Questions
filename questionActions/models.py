@@ -14,4 +14,6 @@ class Question(Document):
     maxBid = IntField(required=True)
     #category = ObjectIdField(required=True) #category ObjectID
 
+class Category(Document):
+    categoryName = StringField(required=True)
 
