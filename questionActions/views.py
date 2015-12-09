@@ -16,7 +16,6 @@ def submitQuestion(request):
     
 
 def submitQuestionHelper(request):
-
     #user who submitted
     userIDPOST = request.POST.get("userID", "")
     #text of the question submitted
@@ -28,12 +27,14 @@ def submitQuestionHelper(request):
     #time submitted, need to get from due to locale info and network inconsistencies
     #example is Jun 1 2005  1:33PM
     #http://stackoverflow.com/questions/466345/converting-string-into-datetime
-    timeSubmittedPOST = request.POST.get("timeSubmitted", "")
-    timeSubmittedPOST = datetime.strptime(timeSubmittedPOST, '%b %d %Y %I:%M%p')
-    #time (in hrs) that the question should be active for
-    expirationTimePOST = request.POST.get("expirationTime", 0)
-    expirationTimePOST = datetime.strptime(expirationTimePOST, '%b %d %Y %I:%M%p')
-
+    try:
+        timeSubmittedPOST = request.POST.get("timeSubmitted", "")
+        timeSubmittedPOST = datetime.strptime(timeSubmittedPOST, '%b %d %Y %I:%M%p')
+        #time (in hrs) that the question should be active for
+        expirationTimePOST = request.POST.get("expirationTime", 0)
+        expirationTimePOST = datetime.strptime(expirationTimePOST, '%b %d %Y %I:%M%p')
+    except:
+        return makeReturnDict(-1, "timeSubmitted and expirationTime are not correctly formatted")
     #question has to be active by default, right?
     isActivePOST = True
     #the bid amount that the user who submitted wants to BET
@@ -41,6 +42,8 @@ def submitQuestionHelper(request):
     #max bid at the start has to be the submit user bid right? or 0 to signify no one has bidded
     maxBidPOST = 0
 
+    if questionTextPOST[-1] != '?':
+        questionTextPOST += '?'
 
     #TODO Error validation on these things
     questionToSubmit = Question(submitUserID = userIDPOST,
@@ -54,8 +57,12 @@ def submitQuestionHelper(request):
                                 maxBid = maxBidPOST
     )
     questionToSubmit.save()
-    returnDict = {}
-    returnDict['success'] = 1
-    returnDict['message'] = "Question successfully submitted!"
-    return returnDict
 
+    return makeReturnDict(1, "Question successfully submitted!")
+
+def makeReturnDict(successStatus, message):
+    returnDict = {}
+    returnDict['success'] = successStatus
+    returnDict['message'] = message
+
+    return returnDict
