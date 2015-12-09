@@ -37,7 +37,7 @@ def submitQuestionHelper(request):
 
 
     #TODO Error validation on these things
-    questionToSubmit = Question(submitUserBid = userIDPOST,
+    questionToSubmit = Question(submitUserID = userIDPOST,
                                 questionText = questionTextPOST,
                                 numOfAnswers = numOfAnswersPOST,
                                 arrayOfAnswers = arrayOfAnswersPOST,
